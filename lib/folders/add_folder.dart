@@ -90,7 +90,7 @@ class _AddFolderState extends State<AddFolder> {
       String folderName = folderController.text;
       bool look = looked;
 
-      String url = baseUrl+"folderCreate";
+      String url = baseUrl+"createFolder";
       Map<String, String> headers = {'content-type': 'application/json'};
       String body = json.encode(
           {'folder_name': folderName, 'user_id': user['id'], 'look': look});
