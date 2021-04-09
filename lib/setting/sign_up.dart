@@ -141,7 +141,7 @@ class _SignUpState extends State<SignUp> {
       var password = passwordController.text;
 
       var _content;
-      String url = baseUrl + "create";
+      String url = baseUrl + "signUp";
       Map<String, String> headers = {'content-type': 'application/json'};
       String body = json.encode(
           {'name': name, 'salon': salon, 'email': email, 'password': password});

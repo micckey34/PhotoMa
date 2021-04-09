@@ -112,7 +112,7 @@ class _SignInState extends State<SignIn> {
       var email = emailController.text;
       var password = passwordController.text;
 
-      String url = baseUrl + "signin";
+      String url = baseUrl + "signIn";
       Map<String, String> headers = {'content-type': 'application/json'};
       String body = json.encode({'email': email, 'password': password});
       http.Response resp =

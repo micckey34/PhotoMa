@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:app_photoma/folders/photo_list.dart';
 import 'package:app_photoma/parts/db.dart';
 import 'package:app_photoma/parts/nav_bar.dart';
 import 'package:app_photoma/parts/color.dart';
@@ -16,11 +17,10 @@ class FolderTop extends StatefulWidget {
 class _FolderTopState extends State<FolderTop> {
 
   List folders;
-  int count;
 
   Future getData() async{
     var id = user['id'].toString();
-    var url = baseUrl+'folder/'+id;
+    var url = baseUrl+'folderList/'+id;
     var response = await http.get(Uri.parse(url));
     setState(() {
     folders = json.decode(response.body);
@@ -55,6 +55,13 @@ class _FolderTopState extends State<FolderTop> {
                   return Center(
                     child:GestureDetector(
                       onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>
+                              PhotoList(id: folders[index]['id'],
+                                folderName: folders[index]['folder_name'],)
+                          ),
+                        );
                       },
                       child: Container(
                         width: 160,
