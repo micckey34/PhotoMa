@@ -1,11 +1,10 @@
-import 'dart:convert';
-
-import 'package:app_photoma/parts/db.dart';
-import 'package:app_photoma/parts/nav_bar.dart';
-import 'package:app_photoma/parts/color.dart';
-import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../dataBase/base_url.dart';
+import '../parts/nav_bar.dart';
+import '../parts/color.dart';
+
 
 class SearchTop extends StatefulWidget {
   @override
@@ -75,7 +74,10 @@ class _SearchTopState extends State<SearchTop> {
                                   width: 65,
                                   decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                    color: Colors.purple
+                                    image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: AssetImage('assets/image.png')
+                                    ),
                                 )
                             ),
                           ),

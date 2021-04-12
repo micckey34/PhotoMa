@@ -1,9 +1,9 @@
-import 'dart:convert';
-import 'package:app_photoma/groups/groups_top.dart';
-import 'package:http/http.dart' as http;
-import 'package:app_photoma/parts/color.dart';
-import 'package:app_photoma/parts/db.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../dataBase/base_url.dart';
+import '../parts/color.dart';
+import '../groups/groups_top.dart';
 
 class CreateGroup extends StatefulWidget {
   @override
@@ -56,12 +56,15 @@ class _CreateGroupState extends State<CreateGroup> {
 
   Future createGroup() async {
     if (_formKey.currentState.validate()) {
+      final int myId =  await user();
+      var userId =  myId.toString();
+
       String groupName = groupController.text;
 
       String url = baseUrl + "createGroup";
       Map<String, String> headers = {'content-type': 'application/json'};
       String body =
-          json.encode({'group_name': groupName, 'user_id': user['id']});
+          json.encode({'group_name': groupName, 'user_id': userId});
       http.Response resp =
           await http.post(Uri.parse(url), headers: headers, body: body);
       print(body);

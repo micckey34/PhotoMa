@@ -1,10 +1,11 @@
-import 'dart:convert';
-import 'package:app_photoma/parts/color.dart';
-import 'package:app_photoma/parts/db.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../dataBase/local_db.dart';
+import '../dataBase/base_url.dart';
+import '../parts/color.dart';
 import 'folder_top.dart';
+
 
 class AddFolder extends StatefulWidget {
   @override
@@ -87,13 +88,15 @@ class _AddFolderState extends State<AddFolder> {
 
   Future addFolder() async {
     if (_formKey.currentState.validate()) {
+      final int myId =  await user();
+      var userId =  myId.toString();
       String folderName = folderController.text;
       bool look = looked;
 
       String url = baseUrl+"createFolder";
       Map<String, String> headers = {'content-type': 'application/json'};
       String body = json.encode(
-          {'folder_name': folderName, 'user_id': user['id'], 'look': look});
+          {'folder_name': folderName, 'user_id': userId, 'look': look});
       http.Response resp =
       await http.post(Uri.parse(url), headers: headers, body: body);
       print(body);

@@ -1,11 +1,12 @@
-import 'dart:convert';
-import 'package:app_photoma/folders/folder_top.dart';
-import 'package:app_photoma/parts/color.dart';
-import 'package:app_photoma/parts/db.dart';
-import 'package:app_photoma/setting/sign_up.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:google_fonts/google_fonts.dart';
+import '../dataBase/base_url.dart';
+import '../dataBase/local_db.dart';
+import '../folders/folder_top.dart';
+import '../parts/color.dart';
+import '../setting/sign_up.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -118,8 +119,12 @@ class _SignInState extends State<SignIn> {
       http.Response resp =
           await http.post(Uri.parse(url), headers: headers, body: body);
       Map status = json.decode(resp.body);
-      // print(status);
+
       if (status['result'] == 'true') {
+        //ローカルデータベースに保存
+        Map<String, dynamic> row = {LocalDatabase.myId: status['id']};
+        final id = await ldb.insert(row);
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => FolderTop()),

@@ -1,12 +1,11 @@
-import 'dart:convert';
-import 'package:app_photoma/folders/photo_list.dart';
-import 'package:app_photoma/parts/db.dart';
-import 'package:app_photoma/parts/nav_bar.dart';
-import 'package:app_photoma/parts/color.dart';
-import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../dataBase/base_url.dart';
+import '../dataBase/local_db.dart';
+import '../parts/nav_bar.dart';
+import '../parts/color.dart';
+import '../folders/photo_list.dart';
 import 'add_folder.dart';
 
 class FolderTop extends StatefulWidget {
@@ -19,19 +18,20 @@ class _FolderTopState extends State<FolderTop> {
   List folders;
 
   Future getData() async{
-    var id = user['id'].toString();
-    var url = baseUrl+'folderList/'+id;
+    final int myId =  await user();
+    var userId =  myId.toString();
+    var url = baseUrl+'folderList/'+userId;
     var response = await http.get(Uri.parse(url));
     setState(() {
     folders = json.decode(response.body);
     });
-    // print(folders);
   }
 
   @override
   void initState() {
     super.initState();
     getData();
+    check();
   }
 
   Widget build(BuildContext context) {
@@ -92,6 +92,11 @@ class _FolderTopState extends State<FolderTop> {
         bottomNavigationBar: BottomNavBar(),
       ),
     );
+  }
+
+  Future check() async{
+    final localData = await LocalDatabase.instance.queryAllRows();
+    localData.forEach((row) => print(row));
   }
 }
 

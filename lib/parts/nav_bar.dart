@@ -1,11 +1,10 @@
+import 'package:flutter/material.dart';
+import 'color.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:app_photoma/folders/folder_top.dart';
 import 'package:app_photoma/groups/groups_top.dart';
 import 'package:app_photoma/search/search_top.dart';
 import 'package:app_photoma/setting/setting_top.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import 'color.dart';
 
 Text title = Text('PhotoMa',style:GoogleFonts.getFont('Fredericka the Great',color: color2,fontSize: 30));
 

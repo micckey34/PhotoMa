@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../parts/nav_bar.dart';
+import '../parts/color.dart';
 
 class PhotoList extends StatefulWidget {
 
@@ -14,7 +16,16 @@ class _PhotoListState extends State<PhotoList> {
   Widget build(BuildContext context) {
   int id = widget.id;
     return Scaffold(
-      body: Center(child: Text(id.toString()))
+      appBar: AppBar(
+        title: title,
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        leading: BackButton(
+            color: color2
+        ),
+      ),
+      body: Center(child: Text(id.toString())),
+      bottomNavigationBar: BottomNavBar(),
     );
   }
 }

@@ -1,14 +1,16 @@
-import 'dart:convert';
-import 'package:app_photoma/parts/nav_bar.dart';
-import 'package:app_photoma/setting/setting_top.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:app_photoma/parts/db.dart';
+import 'dart:convert';
+import '../dataBase/base_url.dart';
+import '../parts/nav_bar.dart';
+import '../setting/setting_top.dart';
 
 Future<void> changeData(type, value) async {
+  final int myId =  await user();
+  var userId =  myId.toString();
   String url = baseUrl + 'update';
   Map<String, String> headers = {'content-type': 'application/json'};
-  String body = json.encode({'type': type, 'id': user['id'], 'value': value});
+  String body = json.encode({'type': type, 'id': userId, 'value': value});
   http.Response resp =
   await http.post(Uri.parse(url), headers: headers, body: body);
   print(body);

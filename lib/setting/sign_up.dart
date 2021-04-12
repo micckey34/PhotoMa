@@ -1,10 +1,10 @@
-import 'dart:convert';
-import 'package:app_photoma/parts/color.dart';
-import 'package:app_photoma/parts/db.dart';
-import 'package:app_photoma/setting/sign_in.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:google_fonts/google_fonts.dart';
+import '../dataBase/base_url.dart';
+import '../parts/color.dart';
+import '../setting/sign_in.dart';
 
 class SignUp extends StatefulWidget {
   @override

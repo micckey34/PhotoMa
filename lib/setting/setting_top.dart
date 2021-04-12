@@ -1,13 +1,11 @@
-import 'dart:convert';
-import 'dart:math';
-
-import 'package:app_photoma/parts/db.dart';
-import 'package:app_photoma/parts/nav_bar.dart';
-import 'package:app_photoma/parts/color.dart';
-import 'package:app_photoma/setting/sign_in.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import '../dataBase/local_db.dart';
+import '../dataBase/base_url.dart';
+import '../parts/nav_bar.dart';
+import '../parts/color.dart';
+import '../setting/sign_in.dart';
 import 'change_my_data.dart';
 
 class SettingTop extends StatefulWidget {
@@ -25,8 +23,9 @@ class _SettingTopState extends State<SettingTop> {
   var data;
 
   Future getData() async {
-    var id = user['id'].toString();
-    var url = baseUrl + 'myData/' + id;
+    final int myId =  await user();
+    var userId =  myId.toString();
+    var url = baseUrl + 'myData/' + userId;
     var response = await http.get(Uri.parse(url));
     setState(() {
       data = json.decode(response.body);
@@ -56,7 +55,28 @@ class _SettingTopState extends State<SettingTop> {
             children: [
               Container(
                 height: 200,
+                width: double.infinity,
                 color: color2,
+                child:Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children:[
+                      Container(
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            // color: Colors.white,
+                            image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: AssetImage('assets/image.png')
+                            ),
+                          )
+                      ),
+                      TextButton(onPressed: (){},
+                          child:Text('Change Image')
+                      )
+                    ]
+                ),
               ),
               Container(
                 padding: EdgeInsets.only(left: 30, right: 30),
@@ -183,6 +203,7 @@ class _SettingTopState extends State<SettingTop> {
                   child: ElevatedButton(
                     child: Text('ログアウト'),
                     onPressed: () {
+                      logout();
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) => SignIn()));
                     },
@@ -195,5 +216,11 @@ class _SettingTopState extends State<SettingTop> {
         bottomNavigationBar: BottomNavBar(),
       ),
     );
+  }
+
+  void logout() async {
+      final id = await ldb.queryRowCount();
+      final rowsDeleted = await ldb.delete(id);
+      print('deleted $rowsDeleted row(s): row $id');
   }
 }
