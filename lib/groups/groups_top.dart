@@ -18,12 +18,10 @@ class _GroupsTopState extends State<GroupsTop> {
 
   Future getData() async {
     final int myId =  await user();
-    var userId =  myId.toString();
-    var url = baseUrl + 'groupList/' + userId;
+    var url = baseUrl + 'groupList/' + myId.toString();
     var response = await http.get(Uri.parse(url));
     setState(() {
       groups = json.decode(response.body);
-      // print(groups);
     });
   }
 
@@ -65,7 +63,7 @@ class _GroupsTopState extends State<GroupsTop> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) =>
-                            GroupPage()
+                            GroupPage(id: groups[index]['id'])
                         ),
                       );
                     },

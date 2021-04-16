@@ -101,7 +101,6 @@ class _JoinGroupState extends State<JoinGroup> {
   void joinCreate() async{
     var groupId = group['id'];
     final int myId =  await user();
-    // var userId =  myId.toString();
     String url = baseUrl + "joinGroup";
     Map<String, String> headers = {'content-type': 'application/json'};
     String body =

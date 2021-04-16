@@ -57,14 +57,12 @@ class _CreateGroupState extends State<CreateGroup> {
   Future createGroup() async {
     if (_formKey.currentState.validate()) {
       final int myId =  await user();
-      var userId =  myId.toString();
-
       String groupName = groupController.text;
 
       String url = baseUrl + "createGroup";
       Map<String, String> headers = {'content-type': 'application/json'};
       String body =
-          json.encode({'group_name': groupName, 'user_id': userId});
+          json.encode({'group_name': groupName, 'user_id': myId.toString()});
       http.Response resp =
           await http.post(Uri.parse(url), headers: headers, body: body);
       print(body);

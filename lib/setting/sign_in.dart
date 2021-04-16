@@ -69,6 +69,7 @@ class _SignInState extends State<SignIn> {
                       height: 50,
                     ),
                     TextFormField(
+                      obscureText: true,
                       controller: passwordController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {

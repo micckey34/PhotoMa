@@ -19,8 +19,7 @@ class _FolderTopState extends State<FolderTop> {
 
   Future getData() async{
     final int myId =  await user();
-    var userId =  myId.toString();
-    var url = baseUrl+'folderList/'+userId;
+    var url = baseUrl+'folderList/'+myId.toString();
     var response = await http.get(Uri.parse(url));
     setState(() {
     folders = json.decode(response.body);

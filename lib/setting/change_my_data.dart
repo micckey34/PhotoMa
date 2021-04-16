@@ -7,10 +7,9 @@ import '../setting/setting_top.dart';
 
 Future<void> changeData(type, value) async {
   final int myId =  await user();
-  var userId =  myId.toString();
   String url = baseUrl + 'update';
   Map<String, String> headers = {'content-type': 'application/json'};
-  String body = json.encode({'type': type, 'id': userId, 'value': value});
+  String body = json.encode({'type': type, 'id': myId, 'value': value});
   http.Response resp =
   await http.post(Uri.parse(url), headers: headers, body: body);
   print(body);

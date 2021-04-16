@@ -31,50 +31,53 @@ class _AddFolderState extends State<AddFolder> {
         builder: (context) {
           return Form(
             key: _formKey,
-            child: AlertDialog(
-              title: Text('フォルダ作成'),
-              content: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: folderController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'フォルダ名を入力してください';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          onPressed: folderController.clear,
-                          icon: Icon(Icons.clear),
+            child:StatefulBuilder(
+              builder: (context, setState) {
+                return AlertDialog(
+                  title: Text('フォルダ作成'),
+                  content: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: folderController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'フォルダ名を入力してください';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              onPressed: folderController.clear,
+                              icon: Icon(Icons.clear),
+                            ),
+                          ),
                         ),
-                      ),
+                        RadioListTile(
+                            title: Text('非公開'),
+                            value: true,
+                            groupValue: looked,
+                            onChanged: (value) => selected(value)
+                        ),
+                        RadioListTile(
+                            title: Text('公開'),
+                            value: false,
+                            groupValue: looked,
+                            onChanged: (value) => selected(value)
+                        ),
+                      ],
                     ),
-                    RadioListTile(
-                      title: Text('非公開'),
-                      value: true,
-                      groupValue: looked,
-                      onChanged:(value)=>selected(value)
-                    ),
-                    RadioListTile(
-                      title: Text('公開'),
-                      value: false,
-                      groupValue: looked,
-                      onChanged: (value)=>selected(value)
-                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                        child: Text('キャンセル'),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        }),
+                    ElevatedButton(onPressed: addFolder, child: Text('作成'))
                   ],
-                ),
-              ),
-              actions: [
-                TextButton(
-                    child: Text('キャンセル'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }),
-                ElevatedButton(onPressed: addFolder, child: Text('作成'))
-              ],
-            ),
+                );
+              }),
           );
         });
   }
@@ -89,21 +92,19 @@ class _AddFolderState extends State<AddFolder> {
   Future addFolder() async {
     if (_formKey.currentState.validate()) {
       final int myId =  await user();
-      var userId =  myId.toString();
       String folderName = folderController.text;
       bool look = looked;
 
       String url = baseUrl+"createFolder";
       Map<String, String> headers = {'content-type': 'application/json'};
       String body = json.encode(
-          {'folder_name': folderName, 'user_id': userId, 'look': look});
+          {'folder_name': folderName, 'user_id': myId, 'look': look});
       http.Response resp =
       await http.post(Uri.parse(url), headers: headers, body: body);
       print(body);
       if (resp.statusCode <= 201) {
         print(resp.statusCode);
         folderController.text = ''; //TextFieldの値を消す
-        // Navigator.pop(context); //閉じる
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => FolderTop()));

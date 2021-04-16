@@ -56,50 +56,10 @@ class _SignUpState extends State<SignUp> {
                       errorMessage,
                       style: TextStyle(color: Colors.red),
                     ),
-                    TextFormField(
-                      controller: nameController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return '名前を入力してください';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(labelText: 'Name'),
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    TextFormField(
-                      controller: salonController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return '美容室を入力してください';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(labelText: 'Salon'),
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    TextFormField(
-                      controller: emailController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'メールアドレスを入力してください';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(labelText: 'E-mail'),
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    TextFormField(
-                      controller: passwordController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'パスワードを入力してください';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(labelText: 'Password'),
-                      style: TextStyle(fontSize: 20),
-                    ),
+                    inputField(false,nameController, '名前', 'Name'),
+                    inputField(false,salonController, 'サロン名', 'Salon'),
+                    inputField(false,emailController, 'メールアドレス', 'E-mail'),
+                    inputField(true,passwordController, 'パスワード', 'Password'),
                     SizedBox(
                       height: 50,
                     ),
@@ -131,6 +91,22 @@ class _SignUpState extends State<SignUp> {
         ),
       ),
     );
+  }
+
+  Widget inputField(bool,controller,type,label){
+    return
+      TextFormField(
+        obscureText: bool,
+        controller: controller,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return type+'を入力してください';
+          }
+          return null;
+        },
+        decoration: InputDecoration(labelText:  label),
+        style: TextStyle(fontSize: 20),
+      );
   }
 
   Future _request() async {

@@ -4,6 +4,7 @@ import 'dart:convert';
 import '../dataBase/base_url.dart';
 import '../parts/nav_bar.dart';
 import '../parts/color.dart';
+import '../search/users_page.dart';
 
 
 class SearchTop extends StatefulWidget {
@@ -47,7 +48,13 @@ class _SearchTopState extends State<SearchTop> {
               itemCount: users == null ? 0 : users.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: null,
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => UsersPage(userId: users[index]['id'],)),
+                    );
+
+                  },
                   child: Container(
                     height: 200,
                     width: double.infinity,
@@ -76,7 +83,9 @@ class _SearchTopState extends State<SearchTop> {
                                   shape: BoxShape.circle,
                                     image: DecorationImage(
                                         fit: BoxFit.fill,
-                                        image: AssetImage('assets/image.png')
+                                        image: users[index]['profile_image_path'] == null ?
+                                        AssetImage('assets/image.png')
+                                            :NetworkImage(users[index]['profile_image_path'])
                                     ),
                                 )
                             ),
