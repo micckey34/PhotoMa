@@ -90,6 +90,7 @@ class _PhotoListState extends State<PhotoList> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: color2,
         onPressed: gallery,
         child: Icon(Icons.image),
       ),

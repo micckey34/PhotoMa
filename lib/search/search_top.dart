@@ -58,7 +58,7 @@ class _SearchTopState extends State<SearchTop> {
                   child: Container(
                       height: 200,
                       width: double.infinity,
-                      margin: EdgeInsets.all(10),
+                      margin: EdgeInsets.only(top:10,bottom:10,left: 20,right: 20),
                       decoration: design,
                       child: Column(
                         children: [
@@ -82,17 +82,16 @@ class _SearchTopState extends State<SearchTop> {
                                           shape: BoxShape.circle,
                                           image: DecorationImage(
                                               fit: BoxFit.fill,
-                                              image: users[index][
-                                                          'profile_image_path'] == null ?
-                                              AssetImage('assets/image.png')
-                                                  : NetworkImage(users[index]['profile_image_path'])
+                                              image: users != null && users[index]['profile_image_path'] != null ?
+                                              NetworkImage(users[index]['profile_image_path'])
+                                                  : AssetImage('assets/image.png')
                                           ),
                                         )
                                     ),
                                   ),
                                 ),
                                 Container(
-                                  width: 240,
+                                  width: 220,
                                   child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
@@ -117,8 +116,9 @@ class _SearchTopState extends State<SearchTop> {
                             Container(
                                 height: 90,
                                 width: double.infinity,
+                                padding: EdgeInsets.only(top: 10,right: 20,left: 20),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SizedBox(
                                     height: 80,
