@@ -50,7 +50,7 @@ TextEditingController postController = TextEditingController();
                     backgroundColor:
                     MaterialStateProperty.all<Color>(color2)),
                 onPressed: postBtn ,
-                child: Text('送信',style: TextStyle(fontSize: 14),)
+                child: Text('送信',style: TextStyle(fontSize: 13),)
             )
         )
       ],

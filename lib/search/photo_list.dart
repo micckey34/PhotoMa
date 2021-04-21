@@ -1,27 +1,21 @@
-import 'package:app_photoma/folders/photo_page.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../dataBase/base_url.dart';
 import '../parts/nav_bar.dart';
 import '../parts/color.dart';
-import '../folders/share_folder.dart';
-import '../folders/file_upload.dart';
+import '../search/photo_page.dart';
 
 class PhotoList extends StatefulWidget {
+
   final int id;
-  final String folderName;
-
-  PhotoList({this.id, this.folderName});
-
+  PhotoList({this.id});
   @override
   _PhotoListState createState() => _PhotoListState();
 }
 
 class _PhotoListState extends State<PhotoList> {
-  var folderId;
+  int folderId;
   List photoList;
 
   Future getData() async {
@@ -33,25 +27,19 @@ class _PhotoListState extends State<PhotoList> {
     // print(folderId);
     // print(photoList);
   }
-  File image;
   @override
   void initState() {
     super.initState();
-    this.folderId = widget.id;
+    folderId = widget.id;
     getData();
   }
   Widget build(BuildContext context) {
-    int id = widget.id;
-    String folderName = widget.folderName;
     return Scaffold(
       appBar: AppBar(
         title: title,
         centerTitle: true,
         backgroundColor: Colors.white,
         leading: BackButton(color: color2),
-        actions: [
-          ShareFolder(folderId: id, folderName: folderName,)
-        ],
       ),
       body: Column(
         children: [
@@ -89,33 +77,7 @@ class _PhotoListState extends State<PhotoList> {
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: gallery,
-        child: Icon(Icons.image),
-      ),
       bottomNavigationBar: BottomNavBar(),
-    );
-  }
-
-  // void camera() async {
-  //   final picker = ImagePicker();
-  //
-  //   var pickedFile = await picker.getImage(source: ImageSource.camera);
-  //   File file = File(pickedFile.path);
-  // }
-
-  void gallery() async {
-    final picker = ImagePicker();
-    var pickedFile = await picker.getImage(source: ImageSource.gallery);
-    File file = File(pickedFile.path);
-    print(file);
-    setState(() {
-      image = file;
-    });
-    await uploadFile(image,widget.id);
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => PhotoList(id: folderId,)),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:app_photoma/search/photo_list.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -16,6 +17,7 @@ class UsersPage extends StatefulWidget {
 
 class _UsersPageState extends State<UsersPage> {
   Map data;
+  List folderData;
 
   Future getData() async {
     final int userId = widget.userId;
@@ -26,10 +28,20 @@ class _UsersPageState extends State<UsersPage> {
     });
   }
 
+  Future folder() async {
+    final int userId = widget.userId;
+    var url = baseUrl + 'folderData/' + userId.toString();
+    var response = await http.get(Uri.parse(url));
+    setState(() {
+      folderData = json.decode(response.body);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     getData();
+    folder();
   }
 
   Widget build(BuildContext context) {
@@ -47,8 +59,8 @@ class _UsersPageState extends State<UsersPage> {
           Container(
             padding: EdgeInsets.only(left: 20,right: 20),
             height: 200,
-            color: Colors.deepPurpleAccent,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
                   width: 100,
@@ -61,25 +73,66 @@ class _UsersPageState extends State<UsersPage> {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               fit: BoxFit.fill,
-                              image: data['profile_image_path'] == null
-                                  ? AssetImage('assets/image.png')
-                                  : NetworkImage(data['profile_image_path'])),
+                              image: data != null && data['profile_image_path'] != null
+                                  ? NetworkImage(data['profile_image_path'])
+                                  : AssetImage('assets/image.png')
+                          ),
                         )),
                   ),
                 ),
                 Container(
-                  width: 200,
-                  child: Column(
-                    children: [
-                      Text(data['name']),
-                      Text(data['salon'])
-                    ],
+                  // padding: EdgeInsets.all(20),
+                  width: 220,
+                  height: 100,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(data == null ? 'name':data['name'],style: TextStyle(fontSize: 25),),
+                        Divider(color: Colors.deepPurpleAccent,thickness: 2,),
+                        Text(data == null ? 'name':data['salon'],style: TextStyle(fontSize: 25))
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          Container()
+          Expanded(
+            child: Container(
+              color: color1,
+              child: Center(
+                child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,),
+                  itemCount: folderData == null ? 0: folderData.length,
+                    itemBuilder: (context,index){
+                  return GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PhotoList(id: folderData[index]['id'],)),
+                      );
+
+                    },
+                    child: Center(
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(folderData[index]['folder_name']),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ),
+          )
         ],
       ),
       bottomNavigationBar: BottomNavBar(),

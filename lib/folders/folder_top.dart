@@ -77,7 +77,7 @@ class _FolderTopState extends State<FolderTop> {
                         ),
                         child: Center(
                           child: Text(folders[index]['folder_name'],
-                            style: TextStyle(fontSize: 25,color: color2),
+                            style: TextStyle(fontSize: 20,color: color2),
                           ),
                         ),
                       ),

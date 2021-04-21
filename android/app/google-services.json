@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1007558753511",
+    "project_id": "photoma-f5215",
+    "storage_bucket": "photoma-f5215.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007558753511:android:67eb521cded52572093642",
+        "android_client_info": {
+          "package_name": "com.example.app_photoma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1007558753511-0bd9l214odmuphaldjf5q9hp7up4re70.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYT_qws_lIG0aCKWFNmQr9WAxMWgYP6Rs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1007558753511-0bd9l214odmuphaldjf5q9hp7up4re70.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1007558753511-b13p95vn8bas1r7r3emg6dlcq3h325ug.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.appPhotoma"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

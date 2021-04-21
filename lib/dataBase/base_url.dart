@@ -3,8 +3,10 @@ import 'local_db.dart';
 // 接続先のURL
 //ローカル
 String baseUrl = 'http://10.0.2.2:8000/api/';
+//スマホ用
+// String baseUrl = 'http://192.168.10.103:8000/api/';
 //サーバー
-// String baseUrl = '';
+// String baseUrl = 'https://photoma.lolipop.io/api/';
 
 // サンプルデータ
 // Map user = {'id':1};

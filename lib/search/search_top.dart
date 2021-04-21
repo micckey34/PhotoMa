@@ -6,14 +6,12 @@ import '../parts/nav_bar.dart';
 import '../parts/color.dart';
 import '../search/users_page.dart';
 
-
 class SearchTop extends StatefulWidget {
   @override
   _SearchTopState createState() => _SearchTopState();
 }
 
 class _SearchTopState extends State<SearchTop> {
-
   List users;
 
   Future getData() async {
@@ -22,7 +20,7 @@ class _SearchTopState extends State<SearchTop> {
     setState(() {
       users = json.decode(response.body);
     });
-    // print(users);
+    print(users);
   }
 
   @override
@@ -48,69 +46,107 @@ class _SearchTopState extends State<SearchTop> {
               itemCount: users == null ? 0 : users.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => UsersPage(userId: users[index]['id'],)),
+                      MaterialPageRoute(
+                          builder: (context) => UsersPage(
+                                userId: users[index]['id'],
+                              )),
                     );
-
                   },
                   child: Container(
-                    height: 200,
-                    width: double.infinity,
-                    margin: EdgeInsets.all(10),
-                    decoration: design,
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 80,
-                          margin: EdgeInsets.only(left: 10, right: 10),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(color: color2))
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                            Container(
-                            width: 120,
-                            child: Center(
-                                child: Container(
-                                  height: 65,
-                                  width: 65,
-                                  decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: users[index]['profile_image_path'] == null ?
-                                        AssetImage('assets/image.png')
-                                            :NetworkImage(users[index]['profile_image_path'])
+                      height: 200,
+                      width: double.infinity,
+                      margin: EdgeInsets.all(10),
+                      decoration: design,
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 90,
+                            margin: EdgeInsets.only(left: 10, right: 10),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                border:
+                                    Border(bottom: BorderSide(color: color2))),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: 120,
+                                  child: Center(
+                                    child: Container(
+                                        height: 65,
+                                        width: 65,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: users[index][
+                                                          'profile_image_path'] == null ?
+                                              AssetImage('assets/image.png')
+                                                  : NetworkImage(users[index]['profile_image_path'])
+                                          ),
+                                        )
                                     ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 240,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      SizedBox(height: 1),
+                                      Text(
+                                        users[index]['name'],
+                                        style: TextStyle(fontSize: 30),
+                                      ),
+                                      Text(
+                                        users[index]['salon'],
+                                        style: TextStyle(fontSize: 20),
+                                      )
+                                    ],
+                                  ),
                                 )
+                              ],
                             ),
                           ),
-                        ),
-                        Container(
-                          width: 240,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment
-                                .spaceAround,
-                            children: [
-                              SizedBox(height: 1),
-                              Text(users[index]['name'],
-                                style: TextStyle(fontSize: 30),),
-                              Text(users[index]['salon'],
-                                style: TextStyle(fontSize: 20),)
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container()
-                  ],
-                )),
+                          SizedBox(
+                            child: (users[index]['folders'].length != 0) ?
+                            Container(
+                                height: 90,
+                                width: double.infinity,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SizedBox(
+                                    height: 80,
+                                    width: 80,
+                                    child: (users[index]['folders'].length > 0)
+                                        ? folder(users[index]['folders'][0]
+                                    ['folder_name']):null
+                                ),
+                                SizedBox(
+                                    height: 80,
+                                    width: 80,
+                                    child: (users[index]['folders'].length > 1)
+                                        ? folder(users[index]['folders'][1]
+                                    ['folder_name']):null
+                                ),
+                                SizedBox(
+                                  height: 80,
+                                  width: 80,
+                                  child: (users[index]['folders'].length > 2)
+                                      ? folder(users[index]['folders'][2]
+                                  ['folder_name']):null
+                                )
+                              ],
+                            )
+                            ):Container()
+                          )
+                        ],
+                      )),
                 );
               }),
         ),
@@ -118,18 +154,30 @@ class _SearchTopState extends State<SearchTop> {
       ),
     );
   }
-
+  Widget folder(name) {
+    return
+      Container(
+        height: 100,
+        width: 100,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color:color1,
+        ),
+        child: Center(
+          child: Text(name,style: TextStyle(fontSize: 12),),
+        ),
+      );
+  }
 
   BoxDecoration design = BoxDecoration(
       borderRadius: BorderRadius.circular(10),
       color: Colors.white,
-      boxShadow: [BoxShadow(
-        color: Colors.black26,
-        spreadRadius: 5.0,
-        blurRadius: 7.0,
-        offset: Offset(0, 0),
-      )
-      ]
-  );
-
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black26,
+          spreadRadius: 5.0,
+          blurRadius: 7.0,
+          offset: Offset(0, 0),
+        )
+      ]);
 }

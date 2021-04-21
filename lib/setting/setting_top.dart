@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import '../dataBase/local_db.dart';
 import '../dataBase/base_url.dart';
 import '../parts/nav_bar.dart';
 import '../parts/color.dart';
 import '../setting/sign_in.dart';
+import '../folders/profile_image.dart';
 import 'change_my_data.dart';
 
 class SettingTop extends StatefulWidget {
@@ -19,6 +22,8 @@ class _SettingTopState extends State<SettingTop> {
   TextEditingController salonController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   var data;
+
+  File image;
 
   Future getData() async {
     final int myId =  await user();
@@ -46,59 +51,68 @@ class _SettingTopState extends State<SettingTop> {
           centerTitle: true,
           actions: [],
         ),
-        body: Column(
-          children: [
-            Container(
-              height: 200,
-              width: double.infinity,
-              color: color2,
-              child:Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children:[
-                    Container(
-                        height: 100,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              fit: BoxFit.fill,
-                              image: data['profile_image_path'] == null ?
-                              AssetImage('assets/image.png')
-                                  :NetworkImage(data['profile_image_path'])
-                          ),
-                        )
-                    ),
-                    TextButton(
-                        child:Text('Change Image'),
-                        onPressed: (){}
-                    )
-                  ]
-              ),
-            ),
-            Container(
-              height: 200,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  inputField(nameController,'name',data == null ? 'name':data['name']),
-                  inputField(salonController,'salon',data == null ? 'salon':data['salon']),
-                  inputField(emailController,'email',data == null ? 'email':data['email']),
-                ],
-              ),
-            ),
-            Container(
-              child: Center(
-                child: ElevatedButton(
-                  child: Text('ログアウト'),
-                  onPressed: () {
-                    logout();
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => SignIn()));
-                  },
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 200,
+                width: double.infinity,
+                // color: color2,
+                child:Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children:[
+                      Container(
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: data != null && data['profile_image_path'] != null ?
+                                NetworkImage(data['profile_image_path'])
+                                    : AssetImage('assets/image.png')
+                            ),
+                          )
+                      ),
+                      TextButton(
+                          child:Text('Change Image'),
+                          onPressed: ()async{
+                            gallery();
+                            await Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => SettingTop()),
+                            );
+                          }
+                      )
+                    ]
                 ),
               ),
-            )
-          ],
+              Divider(color: color2,thickness: 2,),
+              Container(
+                height: 200,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    inputField(nameController,'name',data == null ? 'name':data['name']),
+                    inputField(salonController,'salon',data == null ? 'salon':data['salon']),
+                    inputField(emailController,'email',data == null ? 'email':data['email']),
+                  ],
+                ),
+              ),
+              Container(
+                child: Center(
+                  child: ElevatedButton(
+                    child: Text('ログアウト'),
+                    onPressed: () {
+                      logout();
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => SignIn()));
+                    },
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
         bottomNavigationBar: BottomNavBar(),
       ),
@@ -123,7 +137,8 @@ class _SettingTopState extends State<SettingTop> {
                 var text = controller.text;
                 if(text != ''){
                   await changeData(type, text);
-                  Navigator.pushReplacement(context,
+                  Navigator.pushReplacement(
+                      context,
                       MaterialPageRoute(builder: (context)=>ChangeDone(type: '名前',)
                       ));
                 }
@@ -132,6 +147,17 @@ class _SettingTopState extends State<SettingTop> {
           )
         ]);
   }
+
+
+  void gallery() async {
+    final picker = ImagePicker();
+    var pickedFile = await picker.getImage(source: ImageSource.gallery);
+    File file = File(pickedFile.path);
+    print(file);
+      image = file;
+    await uploadFile(image);
+  }
+
 
   void logout() async {
     final id = await ldb.queryRowCount();
