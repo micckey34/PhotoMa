@@ -8,7 +8,7 @@ import '../dataBase/base_url.dart';
 import '../parts/nav_bar.dart';
 import '../parts/color.dart';
 import '../setting/sign_in.dart';
-import '../folders/profile_image.dart';
+import 'profile_image.dart';
 import 'change_my_data.dart';
 
 class SettingTop extends StatefulWidget {
@@ -75,7 +75,7 @@ class _SettingTopState extends State<SettingTop> {
                           )
                       ),
                       TextButton(
-                          child:Text('Change Image'),
+                          child:Text('プロフィール写真の変更' ,style: TextStyle(color: color2),),
                           onPressed: ()async{
                             gallery();
                             await Navigator.pushReplacement(
@@ -88,8 +88,9 @@ class _SettingTopState extends State<SettingTop> {
                 ),
               ),
               Divider(color: color2,thickness: 2,),
+              SizedBox(height: 30,),
               Container(
-                height: 200,
+                height: 250,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -99,9 +100,12 @@ class _SettingTopState extends State<SettingTop> {
                   ],
                 ),
               ),
+              SizedBox(height: 30,),
               Container(
                 child: Center(
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: color2,),
                     child: Text('ログアウト'),
                     onPressed: () {
                       logout();
@@ -139,10 +143,12 @@ class _SettingTopState extends State<SettingTop> {
                   await changeData(type, text);
                   Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context)=>ChangeDone(type: '名前',)
+                      MaterialPageRoute(builder: (context)=>ChangeDone(type: type,)
                       ));
                 }
               },
+              style: ElevatedButton.styleFrom(
+                  primary: color3,),
               child: Text('保存')
           )
         ]);

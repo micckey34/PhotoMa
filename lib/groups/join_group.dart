@@ -44,7 +44,9 @@ class _JoinGroupState extends State<JoinGroup> {
               SizedBox(height: 30,),
               ElevatedButton(
                   onPressed: search,
-                  child: Text(btn)
+                  child: Text(btn),
+                style: ElevatedButton.styleFrom(
+                  primary: color3,),
               ),
           SizedBox(height: 20,),
               join
@@ -77,7 +79,10 @@ class _JoinGroupState extends State<JoinGroup> {
               Text('グループ名'),
               Text('「'+group['group_name']+'」',style: TextStyle(fontSize: 30),),
               SizedBox(height: 20,),
-              ElevatedButton(onPressed: joinCreate, child: Text('加入'))
+              ElevatedButton(onPressed: joinCreate, child: Text('加入'),
+                style: ElevatedButton.styleFrom(
+                primary: color3,),
+        )
             ],
           ),
         );

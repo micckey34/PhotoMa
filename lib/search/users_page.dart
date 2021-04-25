@@ -48,16 +48,14 @@ class _UsersPageState extends State<UsersPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: BackButton(
-            color: color2
-        ),
+        leading: BackButton(color: color2),
         title: title,
         centerTitle: true,
       ),
       body: Column(
         children: [
           Container(
-            padding: EdgeInsets.only(left: 20,right: 20),
+            padding: EdgeInsets.only(left: 20, right: 20),
             height: 200,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -73,10 +71,10 @@ class _UsersPageState extends State<UsersPage> {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               fit: BoxFit.fill,
-                              image: data != null && data['profile_image_path'] != null
+                              image: data != null &&
+                                      data['profile_image_path'] != null
                                   ? NetworkImage(data['profile_image_path'])
-                                  : AssetImage('assets/image.png')
-                          ),
+                                  : AssetImage('assets/image.png')),
                         )),
                   ),
                 ),
@@ -88,9 +86,16 @@ class _UsersPageState extends State<UsersPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(data == null ? 'name':data['name'],style: TextStyle(fontSize: 25),),
-                        Divider(color: Colors.deepPurpleAccent,thickness: 2,),
-                        Text(data == null ? 'name':data['salon'],style: TextStyle(fontSize: 25))
+                        Text(
+                          data == null ? 'name' : data['name'],
+                          style: TextStyle(fontSize: 25),
+                        ),
+                        Divider(
+                          color: Colors.deepPurpleAccent,
+                          thickness: 2,
+                        ),
+                        Text(data == null ? 'name' : data['salon'],
+                            style: TextStyle(fontSize: 25))
                       ],
                     ),
                   ),
@@ -104,32 +109,41 @@ class _UsersPageState extends State<UsersPage> {
               child: Center(
                 child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,),
-                  itemCount: folderData == null ? 0: folderData.length,
-                    itemBuilder: (context,index){
-                  return GestureDetector(
-                    onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => PhotoList(id: folderData[index]['id'],)),
-                      );
-
-                    },
-                    child: Center(
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text(folderData[index]['folder_name']),
-                        ),
-                      ),
+                      crossAxisCount: 3,
                     ),
-                  );
-                }),
+                    itemCount: folderData == null ? 0 : folderData.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PhotoList(
+                                      id: folderData[index]['id'],
+                                    )),
+                          );
+                        },
+                        child: Center(
+                          child: Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [BoxShadow(
+                                color: Colors.black12,
+                                spreadRadius: 1.0,
+                                blurRadius: 7.0,
+                                offset: Offset(0, 0),
+                              )]
+                            ),
+                            child: Center(
+                              child: Text(folderData[index]['folder_name']),
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
               ),
             ),
           )

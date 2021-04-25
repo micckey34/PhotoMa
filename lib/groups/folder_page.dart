@@ -63,7 +63,6 @@ class _FolderPageState extends State<FolderPage> {
                                   // height: 150,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
-                                    border: Border.all(color: Colors.black26),
                                   ),
                                   child: Center(
                                     child: Image.network(photoList[index]['image_path']),

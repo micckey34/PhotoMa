@@ -55,8 +55,9 @@ class _GroupPageState extends State<GroupPage> {
                 itemBuilder: (context, index) {
                   return Container(
                     margin:
-                        EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+                        EdgeInsets.only(left: 10, right: 20, top: 5, bottom: 5),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
                           child: Column(children: [
@@ -85,9 +86,6 @@ class _GroupPageState extends State<GroupPage> {
                             Text(posts[index]['name'])
                           ]),
                         ),
-                        SizedBox(
-                          width: 20,
-                        ),
                         postBox(
                             posts[index]['posts'], posts[index]['folder_id'])
                       ],
@@ -100,7 +98,7 @@ class _GroupPageState extends State<GroupPage> {
           SingleChildScrollView(
             child: Container(
                 // color: Colors.black12,
-                height: 50,
+                height: 60,
                 width: double.infinity,
                 child: PostCreate(groupId: groupId)),
           )
@@ -114,35 +112,27 @@ class _GroupPageState extends State<GroupPage> {
     if (folder != null) {
       return GestureDetector(
         child: Container(
-          padding: EdgeInsets.only(left: 20, right: 20),
           width: 300,
-          height: 100,
+          height: 60,
+          padding: EdgeInsets.only(left: 20,right: 20),
           decoration: BoxDecoration(
+            color: color3,
             borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
             boxShadow: [
               BoxShadow(
                 color: Colors.black26,
-                spreadRadius: 2.0,
+                spreadRadius: 1.0,
                 blurRadius: 10.0,
-                offset: Offset(0, 0),
+                offset: Offset(0,0)
               )
-            ],
+            ]
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                height: 80,
-                width: 80,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: color3,
-                ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Container(child: Text(text)),
+              Icon(Icons.folder,color: Colors.white,size: 40,),
+              Text(text,style: TextStyle(color: Colors.white,fontSize: 18),),
+              Icon(Icons.arrow_forward_ios_outlined,color: color2,)
             ],
           ),
         ),
@@ -154,22 +144,28 @@ class _GroupPageState extends State<GroupPage> {
         },
       );
     } else {
-      return Container(
-        width: 300,
-        height: 50,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              spreadRadius: 2.0,
-              blurRadius: 10.0,
-              offset: Offset(0, 0),
-            )
-          ],
+      return ConstrainedBox(
+        constraints: BoxConstraints(
+          minWidth: 300,
+          maxWidth: 300,
+          minHeight: 50
         ),
-        child: Center(child: Text(text)),
+        child: Container(
+          padding: EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                spreadRadius: 1.0,
+                blurRadius: 10.0,
+                offset: Offset(0, 0),
+              )
+            ],
+          ),
+          child: Center(child:Text(text)),
+        ),
       );
     }
   }
@@ -192,11 +188,13 @@ class _GroupPageState extends State<GroupPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text('グループID'),
-                  Text(id['unique_id'],style: TextStyle(fontSize: 20,)),
+                  Text('グループID',style: TextStyle(fontWeight: FontWeight.bold),),
+                  Text(id['unique_id'],style: TextStyle(fontSize: 22,)),
                   // SizedBox(height: 10,),
                   ElevatedButton(
                       child: Text('コピー'),
+                    style: ElevatedButton.styleFrom(
+                      primary: color3,),
                     onPressed: () async {
                     final data = ClipboardData(text: id['unique_id']);
                     await Clipboard.setData(data);

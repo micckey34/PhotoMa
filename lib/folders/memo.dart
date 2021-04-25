@@ -26,6 +26,8 @@ class _MemoCreateState extends State<MemoCreate> {
           stepHeight: 50,
           child: TextField(
             controller: memoController,
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -47,35 +49,30 @@ class _MemoCreateState extends State<MemoCreate> {
             width: 60,
             child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor:
-                    MaterialStateProperty.all<Color>(color2)),
-                onPressed: postBtn ,
-                child: Text('メモ',style: TextStyle(fontSize: 13),)
-            )
-        )
+                    backgroundColor: MaterialStateProperty.all<Color>(color2)),
+                onPressed: postBtn,
+                child: Text('メモ',
+                  style: TextStyle(fontSize: 13),
+                )))
       ],
     );
   }
 
-  Future postBtn() async{
-    final int myId =  await user();
+  Future postBtn() async {
     var text = memoController.text;
-  //   print(text);
-  //
     var url = baseUrl + 'memoCreate';
     Map<String, String> headers = {'content-type': 'application/json'};
-    String body = json.encode({'posts':text,'image_id':widget.imageId});
+    String body = json.encode({'posts': text, 'image_id': widget.imageId});
     http.Response resp =
-    await http.post(Uri.parse(url), headers: headers, body: body);
+        await http.post(Uri.parse(url), headers: headers, body: body);
     print(resp.statusCode);
-    print(body);
-    if(resp.statusCode <= 201){
+    if (resp.statusCode <= 201) {
       Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => PhotoPage(id: widget.imageId,)));
+          MaterialPageRoute(
+              builder: (context) => PhotoPage(
+                    id: widget.imageId,
+                  )));
     }
   }
 }
-
-
-

@@ -15,6 +15,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'PhotoMa',
       home: StartPage(),
+      theme: ThemeData(
+        primaryColor: color2
+      ),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../dataBase/base_url.dart';
@@ -12,15 +13,20 @@ class SearchTop extends StatefulWidget {
 }
 
 class _SearchTopState extends State<SearchTop> {
+  List data;
   List users;
 
   Future getData() async {
+    final int myId =  await user();
     var url = baseUrl + "usersList";
     var response = await http.get(Uri.parse(url));
     setState(() {
-      users = json.decode(response.body);
+      data = json.decode(response.body);
+      users = data.where((user)=>user['id'] != myId).toList();
     });
+    // print(users[0]['id']);
     print(users);
+
   }
 
   @override
@@ -99,11 +105,11 @@ class _SearchTopState extends State<SearchTop> {
                                       SizedBox(height: 1),
                                       Text(
                                         users[index]['name'],
-                                        style: TextStyle(fontSize: 30),
+                                        style: GoogleFonts.getFont('Kosugi Maru',fontSize: 28),
                                       ),
                                       Text(
                                         users[index]['salon'],
-                                        style: TextStyle(fontSize: 20),
+                                        style: GoogleFonts.getFont('Kosugi Maru',fontSize: 17),
                                       )
                                     ],
                                   ),

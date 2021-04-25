@@ -95,7 +95,7 @@ class _SignInState extends State<SignIn> {
                     ),
                     TextButton(
                       onPressed: signUp,
-                      child: Text('新規登録はこちら'),
+                      child: Text('新規登録はこちら',style: TextStyle(color: color2),),
                       style: TextButton.styleFrom(
                           textStyle: TextStyle(fontSize: 18)),
                     )

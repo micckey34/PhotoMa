@@ -1,4 +1,6 @@
+import 'package:app_photoma/parts/color.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../parts/nav_bar.dart';
@@ -14,6 +16,7 @@ class PhotoPage extends StatefulWidget {
 class _PhotoPageState extends State<PhotoPage> {
   int imageId;
   Map image;
+  List memo;
   Future getData() async {
     var url = baseUrl + 'photoPage/' + imageId.toString();
     var response = await http.get(Uri.parse(url));
@@ -22,23 +25,58 @@ class _PhotoPageState extends State<PhotoPage> {
       image = json.decode(response.body);
     });
   }
+
+  Future getMemo() async {
+    var url = baseUrl + 'getMemo/' + imageId.toString();
+    var response = await http.get(Uri.parse(url));
+    setState(() {
+      memo = json.decode(response.body);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     imageId = widget.id;
     getData();
+    getMemo();
   }
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Column(children: [
-        Container(
-          child: Center(
-            child: (image != null) ? Image.network(image['image_path']):Container(),
+      appBar: AppBar(
+        title: title,
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        leading: BackButton(color: color2),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  (image != null) ? Image.network(image['image_path']) : Container(),
+                  Text('MEMO',style: GoogleFonts.getFont('Concert One',fontSize: 40),),
+                  Container(
+                    padding: EdgeInsets.only(left: 20,right: 20),
+                    height: 300,
+                    child: Center(
+                      child:  ListView.builder(
+                        itemCount: memo == null ? 0 : memo.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                              child:Text(memo[index]['posts'])
+                          );
+                        },
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
-        Container(),
-      ]),
+        ],
+      ),
       bottomNavigationBar: BottomNavBar(),
     );
   }

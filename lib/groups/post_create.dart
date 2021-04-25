@@ -26,6 +26,8 @@ TextEditingController postController = TextEditingController();
           stepHeight: 50,
           child: TextField(
             controller: postController,
+            keyboardType: TextInputType.multiline,
+            maxLines: 3,
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -50,7 +52,8 @@ TextEditingController postController = TextEditingController();
                     backgroundColor:
                     MaterialStateProperty.all<Color>(color2)),
                 onPressed: postBtn ,
-                child: Text('送信',style: TextStyle(fontSize: 13),)
+                // child: Text('送信',style: TextStyle(fontSize: 13),)
+                child: Icon(Icons.send,color: Colors.white,)
             )
         )
       ],

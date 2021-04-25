@@ -4,7 +4,6 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
-
 var ldb = LocalDatabase.instance;
 
 class LocalDatabase {
@@ -14,11 +13,13 @@ class LocalDatabase {
   static final myId = '_user_id';
 
   LocalDatabase._privateConstructor();
+
   static final LocalDatabase instance = LocalDatabase._privateConstructor();
-  
+
   static Database _database;
-  Future <Database> get database async{
-    if(_database != null) return _database;
+
+  Future<Database> get database async {
+    if (_database != null) return _database;
     _database = await _initDatabase();
     return _database;
   }
@@ -27,14 +28,10 @@ class LocalDatabase {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, _databaseName);
 
-    return await openDatabase(path,
-        version: 1,
-        onCreate: _onCreate);
+    return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
-  
-  
 
-  FutureOr<void> _onCreate(Database db, int version) async{
+  FutureOr<void> _onCreate(Database db, int version) async {
     await db.execute('''
     CREATE TABLE $table(
     $id INTEGER PRIMARY KEY,
@@ -55,7 +52,8 @@ class LocalDatabase {
 
   Future<int> queryRowCount() async {
     Database db = await instance.database; //DBにアクセスする
-    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $table'));
+    return Sqflite.firstIntValue(
+        await db.rawQuery('SELECT COUNT(*) FROM $table'));
   }
 
   Future<int> delete(int id) async {

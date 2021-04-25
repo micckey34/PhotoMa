@@ -30,16 +30,17 @@ class _PhotoListState extends State<PhotoList> {
     setState(() {
       photoList = json.decode(response.body);
     });
-    // print(folderId);
-    // print(photoList);
   }
+
   File image;
+
   @override
   void initState() {
     super.initState();
     this.folderId = widget.id;
     getData();
   }
+
   Widget build(BuildContext context) {
     int id = widget.id;
     String folderName = widget.folderName;
@@ -63,23 +64,24 @@ class _PhotoListState extends State<PhotoList> {
                       itemCount: photoList == null ? 0 : photoList.length,
                       itemBuilder: (BuildContext ctx, index) {
                         return Center(
-                          child:GestureDetector(
-                              onTap: (){
+                          child: GestureDetector(
+                              onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => PhotoPage(id: photoList[index]['id'],)),
+                                  MaterialPageRoute(builder: (context) =>
+                                      PhotoPage(id: photoList[index]['id'],)),
                                 );
-
                               },
                               child: Container(
                                 // width: 150,
                                 // height: 150,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  border: Border.all(color: Colors.black26),
+                                  // border: Border.all(color: Colors.black26),
                                 ),
                                 child: Center(
-                                  child: Image.network(photoList[index]['image_path']),
+                                  child: Image.network(
+                                      photoList[index]['image_path']),
                                 ),
                               )
                           ),
@@ -90,20 +92,83 @@ class _PhotoListState extends State<PhotoList> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: color2,
-        onPressed: gallery,
         child: Icon(Icons.image),
+        backgroundColor: color2,
+        onPressed:(){
+          showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: Text('写真の選択',textAlign: TextAlign.center,),
+                content: Container(
+                  height: 200,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(
+                        width: 180,
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed: (){
+                            Navigator.pop(context);
+                            camera();
+                          },
+                          child: Text('写真を撮る'),
+                          style: ElevatedButton.styleFrom(
+                            primary: color3,),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 180,
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed: (){
+                            Navigator.pop(context);
+                            gallery();
+                          },
+                          child: Text('ギャラリーから選ぶ'),
+                          style: ElevatedButton.styleFrom(
+                            primary: color3,),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                actions: [
+                  SizedBox(
+                    width: 270,
+                    child: TextButton(
+                      child: Text('キャンセル',textAlign: TextAlign.center,),
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },),
+                  )
+                ],
+              );
+            },
+          );
+        },
       ),
       bottomNavigationBar: BottomNavBar(),
     );
   }
 
-  // void camera() async {
-  //   final picker = ImagePicker();
-  //
-  //   var pickedFile = await picker.getImage(source: ImageSource.camera);
-  //   File file = File(pickedFile.path);
-  // }
+
+
+  void camera() async {
+    final picker = ImagePicker();
+    var pickedFile = await picker.getImage(source: ImageSource.camera);
+    File file = File(pickedFile.path);
+    print(file);
+    setState(() {
+      image = file;
+    });
+    await uploadFile(image, widget.id);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => PhotoList(id: folderId,)),
+    );
+  }
 
   void gallery() async {
     final picker = ImagePicker();
@@ -113,7 +178,7 @@ class _PhotoListState extends State<PhotoList> {
     setState(() {
       image = file;
     });
-    await uploadFile(image,widget.id);
+    await uploadFile(image, widget.id);
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => PhotoList(id: folderId,)),

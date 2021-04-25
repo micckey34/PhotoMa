@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../dataBase/base_url.dart';
-import '../dataBase/local_db.dart';
 import '../parts/nav_bar.dart';
 import '../parts/color.dart';
 import '../folders/photo_list.dart';
@@ -14,15 +13,14 @@ class FolderTop extends StatefulWidget {
 }
 
 class _FolderTopState extends State<FolderTop> {
-
   List folders;
 
-  Future getData() async{
-    final int myId =  await user();
-    var url = baseUrl+'folderList/'+myId.toString();
+  Future getData() async {
+    final int myId = await user();
+    var url = baseUrl + 'folderList/' + myId.toString();
     var response = await http.get(Uri.parse(url));
     setState(() {
-    folders = json.decode(response.body);
+      folders = json.decode(response.body);
     });
   }
 
@@ -30,7 +28,6 @@ class _FolderTopState extends State<FolderTop> {
   void initState() {
     super.initState();
     getData();
-    check();
   }
 
   Widget build(BuildContext context) {
@@ -46,20 +43,21 @@ class _FolderTopState extends State<FolderTop> {
         ),
         body: Container(
           child: Center(
-            child:GridView.builder(
+            child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,),
-                itemCount:folders == null ? 0: folders.length,
+                  crossAxisCount: 2,
+                ),
+                itemCount: folders == null ? 0 : folders.length,
                 itemBuilder: (BuildContext ctx, index) {
                   return Center(
-                    child:GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) =>
-                              PhotoList(id: folders[index]['id'],
-                                folderName: folders[index]['folder_name'],)
-                          ),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                          MaterialPageRoute(
+                              builder: (context) => PhotoList(
+                                    id: folders[index]['id'],
+                                    folderName: folders[index]['folder_name'],
+                                  )),
                         );
                       },
                       child: Container(
@@ -68,23 +66,25 @@ class _FolderTopState extends State<FolderTop> {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
-                          boxShadow: [BoxShadow(
-                            color: Colors.black26,
-                            spreadRadius: 2.0,
-                            blurRadius: 7.0,
-                            offset: Offset(5, 5),
-                          )],
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black26,
+                              spreadRadius: 2.0,
+                              blurRadius: 7.0,
+                              offset: Offset(5, 5),
+                            )
+                          ],
                         ),
                         child: Center(
-                          child: Text(folders[index]['folder_name'],
-                            style: TextStyle(fontSize: 20,color: color2),
+                          child: Text(
+                            folders[index]['folder_name'],
+                            style: TextStyle(fontSize: 20, color: color2),
                           ),
                         ),
                       ),
                     ),
                   );
-                }
-            ),
+                }),
           ),
           // color: color1,
         ),
@@ -92,11 +92,4 @@ class _FolderTopState extends State<FolderTop> {
       ),
     );
   }
-
-  Future check() async{
-    final localData = await LocalDatabase.instance.queryAllRows();
-    localData.forEach((row) => print(row));
-  }
 }
-
-

@@ -7,7 +7,6 @@ import '../dataBase/base_url.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import '../setting/setting_top.dart';
 
 Future uploadFile(File _image ) async {
   Firebase.initializeApp();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../parts/nav_bar.dart';
@@ -53,25 +54,27 @@ class _PhotoPageState extends State<PhotoPage> {
         backgroundColor: Colors.white,
         leading: BackButton(color: color2),
       ),
-      body:
-      Column(
+      body: Column(
         children: [
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  (image != null) ? Image.network(image['image_path']) : Container(),
-                  Text('MEMO',style: TextStyle(fontSize: 40),),
+                  (image != null)
+                      ? Image.network(image['image_path'])
+                      : Container(),
+                  Text(
+                    'MEMO',
+                    style: GoogleFonts.getFont('Concert One', fontSize: 40),
+                  ),
                   Container(
-                    color: Colors.black12,
+                    padding: EdgeInsets.only(left: 20, right: 20),
                     height: 300,
                     child: Center(
-                      child:  ListView.builder(
+                      child: ListView.builder(
                         itemCount: memo == null ? 0 : memo.length,
                         itemBuilder: (context, index) {
-                          return Container(
-                                    child:Text(memo[index]['posts'])
-                          );
+                          return Container(child: Text(memo[index]['posts']));
                         },
                       ),
                     ),
@@ -81,12 +84,12 @@ class _PhotoPageState extends State<PhotoPage> {
             ),
           ),
           SingleChildScrollView(
-              child:Container(
-                height: 50,
-                color: color1,
-                child: MemoCreate(imageId: imageId,)
-              )
-          )
+              child: Container(
+                  height: 60,
+                  // color: color1,
+                  child: MemoCreate(
+                    imageId: imageId,
+                  )))
         ],
       ),
       bottomNavigationBar: BottomNavBar(),

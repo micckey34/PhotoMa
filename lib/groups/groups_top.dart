@@ -17,7 +17,7 @@ class _GroupsTopState extends State<GroupsTop> {
   List groups;
 
   Future getData() async {
-    final int myId =  await user();
+    final int myId = await user();
     var url = baseUrl + 'groupList/' + myId.toString();
     var response = await http.get(Uri.parse(url));
     setState(() {
@@ -48,23 +48,27 @@ class _GroupsTopState extends State<GroupsTop> {
               itemCount: groups == null ? 0 : groups.length,
               itemBuilder: (context, index) {
                 return Container(
-                  padding: EdgeInsets.only(left: 10,right: 10),
+                  padding: EdgeInsets.only(left: 10, right: 10),
                   decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: color2)),
+                    border: Border(bottom: BorderSide(color: color3)),
                   ),
                   child: ListTile(
-                    leading: Icon(Icons.group, color: color2,size: 30,),
+                    leading: Icon(
+                      Icons.group,
+                      color: color2,
+                      size: 30,
+                    ),
                     title: Text('${groups[index]['group_name']}',
                         style: TextStyle(fontSize: 25, color: color2)),
                     trailing:
-                        Icon(Icons.arrow_forward_ios_outlined, color: color2),
+                        Icon(Icons.arrow_forward_ios_outlined, color: color3),
                     contentPadding: EdgeInsets.all(5.0),
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>
-                            GroupPage(id: groups[index]['id'])
-                        ),
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                GroupPage(id: groups[index]['id'])),
                       );
                     },
                   ),
@@ -74,12 +78,11 @@ class _GroupsTopState extends State<GroupsTop> {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           backgroundColor: color2,
-          onPressed: (){
+          onPressed: () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => JoinGroup()),
             );
-
           },
         ),
         bottomNavigationBar: BottomNavBar(),

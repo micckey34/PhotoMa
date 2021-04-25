@@ -32,23 +32,34 @@ class _CreateGroupState extends State<CreateGroup> {
               key: _formKey,
               child: AlertDialog(
                 title: Text('グループ作成'),
-                content: TextFormField(
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'グループ名を入力してください';
-                    }
-                    return null;
-                  },
-                  controller: groupController,
-                  decoration: InputDecoration(labelText: 'グループ名'),
+                content: Container(
+                  height: 100,
+                  child: Center(
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'グループ名を入力してください';
+                        }
+                        return null;
+                      },
+                      controller: groupController,
+                      decoration: InputDecoration(labelText: 'グループ名'),
+                    ),
+                  ),
                 ),
                 actions: [
                   TextButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('キャンセル')),
-                  ElevatedButton(onPressed: createGroup, child: Text('作成'))
+                      child: Text('キャンセル',style: TextStyle(color: color3),)),
+                  ElevatedButton(
+                    onPressed: createGroup,
+                    child: Text('作成'),
+                    style: ElevatedButton.styleFrom(
+                      primary: color2,
+                    ),
+                  )
                 ],
               ));
         });
@@ -56,7 +67,7 @@ class _CreateGroupState extends State<CreateGroup> {
 
   Future createGroup() async {
     if (_formKey.currentState.validate()) {
-      final int myId =  await user();
+      final int myId = await user();
       String groupName = groupController.text;
 
       String url = baseUrl + "createGroup";

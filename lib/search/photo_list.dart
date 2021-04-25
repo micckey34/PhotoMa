@@ -64,7 +64,6 @@ class _PhotoListState extends State<PhotoList> {
                                 // height: 150,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  border: Border.all(color: Colors.black26),
                                 ),
                                 child: Center(
                                   child: Image.network(photoList[index]['image_path']),

@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../dataBase/base_url.dart';
 import '../parts/nav_bar.dart';
+import '../parts/color.dart';
 import '../setting/setting_top.dart';
 
 Future<void> changeData(type, value) async {
@@ -28,7 +29,13 @@ class ChangeDone extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        title: title,
+        centerTitle: true,
+        actions: [],
+      ),
       body:
       Center(
         child: Column(
@@ -38,6 +45,8 @@ class ChangeDone extends StatelessWidget {
             SizedBox(height: 30,),
             ElevatedButton(
                 child: Text('戻る'),
+                style: ElevatedButton.styleFrom(
+                  primary: color3,),
                 onPressed: () {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => SettingTop()));
