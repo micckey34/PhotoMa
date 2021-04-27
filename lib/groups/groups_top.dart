@@ -43,38 +43,50 @@ class _GroupsTopState extends State<GroupsTop> {
           centerTitle: true,
           actions: [CreateGroup()],
         ),
-        body: Center(
-          child: ListView.builder(
-              itemCount: groups == null ? 0 : groups.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: color3)),
-                  ),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.group,
-                      color: color2,
-                      size: 30,
-                    ),
-                    title: Text('${groups[index]['group_name']}',
-                        style: TextStyle(fontSize: 25, color: color2)),
-                    trailing:
-                        Icon(Icons.arrow_forward_ios_outlined, color: color3),
-                    contentPadding: EdgeInsets.all(5.0),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                GroupPage(id: groups[index]['id'])),
+        body: (groups != null && groups.length == 0)
+            ? Container(
+          padding: EdgeInsets.all(30),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('右上のアイコンからグループを作ってみましょう。'),
+                    Text('また、右下のアイコンから'),
+                    Text('グループに参加することもできます。')
+                  ],
+                ),
+              )
+            : Center(
+                child: ListView.builder(
+                    itemCount: groups == null ? 0 : groups.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        padding: EdgeInsets.only(left: 10, right: 10),
+                        decoration: BoxDecoration(
+                          border: Border(bottom: BorderSide(color: color3)),
+                        ),
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.group,
+                            color: color2,
+                            size: 30,
+                          ),
+                          title: Text('${groups[index]['group_name']}',
+                              style: TextStyle(fontSize: 25, color: color2)),
+                          trailing: Icon(Icons.arrow_forward_ios_outlined,
+                              color: color3),
+                          contentPadding: EdgeInsets.all(5.0),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      GroupPage(id: groups[index]['id'])),
+                            );
+                          },
+                        ),
                       );
-                    },
-                  ),
-                );
-              }),
-        ),
+                    }),
+              ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           backgroundColor: color2,

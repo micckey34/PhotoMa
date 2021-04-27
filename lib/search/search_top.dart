@@ -24,9 +24,6 @@ class _SearchTopState extends State<SearchTop> {
       data = json.decode(response.body);
       users = data.where((user)=>user['id'] != myId).toList();
     });
-    // print(users[0]['id']);
-    print(users);
-
   }
 
   @override

@@ -1,5 +1,3 @@
-import 'package:app_photoma/folders/delete_folder.dart';
-import 'package:app_photoma/folders/photo_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -8,6 +6,8 @@ import 'dart:convert';
 import '../dataBase/base_url.dart';
 import '../parts/nav_bar.dart';
 import '../parts/color.dart';
+import '../folders/delete_folder.dart';
+import '../folders/photo_page.dart';
 import '../folders/share_folder.dart';
 import '../folders/file_upload.dart';
 
