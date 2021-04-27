@@ -4,9 +4,9 @@ import 'local_db.dart';
 //ローカル
 // String baseUrl = 'http://10.0.2.2:8000/api/';
 //スマホ用
-String baseUrl = 'http://192.168.10.170:8000/api/';
+// String baseUrl = 'http://192.168.10.170:8000/api/';
 //サーバー
-// String baseUrl = 'https://photoma.lolipop.io/api/';
+String baseUrl = 'https://photoma.lolipop.io/api/';
 
 Future<int> user() async {
   final localData = await ldb.queryAllRows();
