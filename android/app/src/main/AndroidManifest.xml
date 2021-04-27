@@ -2,7 +2,7 @@
     package="com.example.app_photoma">
 
     <application
-        android:label="app_photoma"
+        android:label="PhotoMa"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
