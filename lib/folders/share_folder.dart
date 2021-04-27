@@ -95,7 +95,7 @@ class _ShareFolderState extends State<ShareFolder> {
                   onPressed: share,
                   child: Text('シェア'),
                   style: ElevatedButton.styleFrom(
-                    primary: color3,
+                    primary: color2,
                   ),
                 )
               ],

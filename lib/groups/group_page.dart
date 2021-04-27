@@ -1,3 +1,4 @@
+import 'package:app_photoma/groups/delete_post.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -19,10 +20,11 @@ class GroupPage extends StatefulWidget {
 
 class _GroupPageState extends State<GroupPage> {
   var groupId;
-
+  int myId;
   List posts;
 
   Future getData() async {
+    myId = await user();
     var url = baseUrl + 'groupPage/' + groupId.toString();
     var response = await http.get(Uri.parse(url));
     setState(() {
@@ -86,7 +88,7 @@ class _GroupPageState extends State<GroupPage> {
                             Text(posts[index]['name'])
                           ]),
                         ),
-                        postBox(
+                        postBox(posts[index]['id'], posts[index]['user_id'],
                             posts[index]['posts'], posts[index]['folder_id'])
                       ],
                     ),
@@ -108,31 +110,39 @@ class _GroupPageState extends State<GroupPage> {
     );
   }
 
-  Widget postBox(text, folder) {
+  Widget postBox(id, userId, text, folder) {
     if (folder != null) {
       return GestureDetector(
         child: Container(
           width: 300,
           height: 60,
-          padding: EdgeInsets.only(left: 20,right: 20),
+          padding: EdgeInsets.only(left: 20, right: 20),
           decoration: BoxDecoration(
-            color: color3,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                spreadRadius: 1.0,
-                blurRadius: 10.0,
-                offset: Offset(0,0)
-              )
-            ]
-          ),
+              color: color3,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black26,
+                    spreadRadius: 1.0,
+                    blurRadius: 10.0,
+                    offset: Offset(0, 0))
+              ]),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(Icons.folder,color: Colors.white,size: 40,),
-              Text(text,style: TextStyle(color: Colors.white,fontSize: 18),),
-              Icon(Icons.arrow_forward_ios_outlined,color: color2,)
+              Icon(
+                Icons.folder,
+                color: Colors.white,
+                size: 40,
+              ),
+              Text(
+                text,
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ),
+              Icon(
+                Icons.arrow_forward_ios_outlined,
+                color: color2,
+              )
             ],
           ),
         ),
@@ -142,36 +152,91 @@ class _GroupPageState extends State<GroupPage> {
             MaterialPageRoute(builder: (context) => FolderPage(id: folder)),
           );
         },
+        onLongPress: () {
+          if (userId == myId) {
+            deleteDialog(id);
+          }
+        },
       );
     } else {
-      return ConstrainedBox(
-        constraints: BoxConstraints(
-          minWidth: 300,
-          maxWidth: 300,
-          minHeight: 50
-        ),
-        child: Container(
-          padding: EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                spreadRadius: 1.0,
-                blurRadius: 10.0,
-                offset: Offset(0, 0),
-              )
-            ],
+      return GestureDetector(
+        child: ConstrainedBox(
+          constraints:
+              BoxConstraints(minWidth: 300, maxWidth: 300, minHeight: 50),
+          child: Container(
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  spreadRadius: 1.0,
+                  blurRadius: 10.0,
+                  offset: Offset(0, 0),
+                )
+              ],
+            ),
+            child: Center(child: Text(text)),
           ),
-          child: Center(child:Text(text)),
         ),
+        onLongPress: () {
+          if (userId == myId) {
+            deleteDialog(id);
+          }
+        },
       );
     }
   }
 
+  deleteDialog(id) {
+    return showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          content: Container(
+              height: 100,
+              width: 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("この投稿を"),
+                  Text("削除してもよろしいですか？"),
+                ],
+              )),
+          actions: [
+            // ボタン領域
+            TextButton(
+              child: Text(
+                "キャンセル",
+                style: TextStyle(color: color3),
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
+            ElevatedButton(
+              child: Text("削除"),
+              style: ElevatedButton.styleFrom(primary: color2),
+              onPressed: () async{
+                await deletePost(id);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => GroupPage(id:groupId)),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   idBtn() {
-    return IconButton(icon: Icon(Icons.message,color: color2,), onPressed: idDialog);
+    return IconButton(
+        icon: Icon(
+          Icons.message,
+          color: color2,
+        ),
+        onPressed: idDialog);
   }
 
   idDialog() async {
@@ -188,17 +253,24 @@ class _GroupPageState extends State<GroupPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text('グループID',style: TextStyle(fontWeight: FontWeight.bold),),
-                  Text(id['unique_id'],style: TextStyle(fontSize: 22,)),
+                  Text(
+                    'グループID',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(id['unique_id'],
+                      style: TextStyle(
+                        fontSize: 22,
+                      )),
                   // SizedBox(height: 10,),
                   ElevatedButton(
-                      child: Text('コピー'),
+                    child: Text('コピー'),
                     style: ElevatedButton.styleFrom(
-                      primary: color3,),
+                      primary: color3,
+                    ),
                     onPressed: () async {
-                    final data = ClipboardData(text: id['unique_id']);
-                    await Clipboard.setData(data);
-                  },
+                      final data = ClipboardData(text: id['unique_id']);
+                      await Clipboard.setData(data);
+                    },
                   )
                 ],
               ),

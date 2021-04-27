@@ -8,7 +8,9 @@ import '../dataBase/base_url.dart';
 
 class PhotoPage extends StatefulWidget {
   int id;
+
   PhotoPage({this.id});
+
   @override
   _PhotoPageState createState() => _PhotoPageState();
 }
@@ -17,6 +19,7 @@ class _PhotoPageState extends State<PhotoPage> {
   int imageId;
   Map image;
   List memo;
+
   Future getData() async {
     var url = baseUrl + 'photoPage/' + imageId.toString();
     var response = await http.get(Uri.parse(url));
@@ -41,6 +44,7 @@ class _PhotoPageState extends State<PhotoPage> {
     getData();
     getMemo();
   }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -55,18 +59,26 @@ class _PhotoPageState extends State<PhotoPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  (image != null) ? Image.network(image['image_path']) : Container(),
-                  Text('MEMO',style: GoogleFonts.getFont('Concert One',fontSize: 40),),
+                  (image != null)
+                      ? Image.network(image['image_path'])
+                      : Container(),
+                  Text(
+                    'MEMO',
+                    style: GoogleFonts.getFont('Concert One', fontSize: 40),
+                  ),
                   Container(
-                    padding: EdgeInsets.only(left: 20,right: 20),
+                    padding: EdgeInsets.only(
+                        left: 30, right: 30, top: 20, bottom: 10),
                     height: 300,
                     child: Center(
-                      child:  ListView.builder(
+                      child: ListView.builder(
                         itemCount: memo == null ? 0 : memo.length,
                         itemBuilder: (context, index) {
                           return Container(
-                              child:Text(memo[index]['posts'])
-                          );
+                              child: Text(
+                            memo[index]['posts'],
+                            style: TextStyle(fontSize: 20),
+                          ));
                         },
                       ),
                     ),

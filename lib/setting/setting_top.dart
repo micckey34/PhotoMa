@@ -105,7 +105,7 @@ class _SettingTopState extends State<SettingTop> {
                 child: Center(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: color2,),
+                      primary: color3,),
                     child: Text('ログアウト'),
                     onPressed: () {
                       logout();
@@ -148,7 +148,7 @@ class _SettingTopState extends State<SettingTop> {
                 }
               },
               style: ElevatedButton.styleFrom(
-                  primary: color3,),
+                  primary: color2,),
               child: Text('保存')
           )
         ]);

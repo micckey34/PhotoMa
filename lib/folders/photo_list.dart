@@ -1,3 +1,4 @@
+import 'package:app_photoma/folders/delete_folder.dart';
 import 'package:app_photoma/folders/photo_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -51,7 +52,10 @@ class _PhotoListState extends State<PhotoList> {
         backgroundColor: Colors.white,
         leading: BackButton(color: color2),
         actions: [
-          ShareFolder(folderId: id, folderName: folderName,)
+          ShareFolder(
+            folderId: id,
+            folderName: folderName,
+          )
         ],
       ),
       body: Column(
@@ -60,7 +64,8 @@ class _PhotoListState extends State<PhotoList> {
               child: Center(
                   child: GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,),
+                        crossAxisCount: 2,
+                      ),
                       itemCount: photoList == null ? 0 : photoList.length,
                       itemBuilder: (BuildContext ctx, index) {
                         return Center(
@@ -68,8 +73,10 @@ class _PhotoListState extends State<PhotoList> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) =>
-                                      PhotoPage(id: photoList[index]['id'],)),
+                                  MaterialPageRoute(
+                                      builder: (context) => PhotoPage(
+                                            id: photoList[index]['id'],
+                                          )),
                                 );
                               },
                               child: Container(
@@ -83,23 +90,62 @@ class _PhotoListState extends State<PhotoList> {
                                   child: Image.network(
                                       photoList[index]['image_path']),
                                 ),
-                              )
+                              ),
+                            onLongPress: (){
+                              showDialog(
+                                context: context,
+                                builder: (_) {
+                                  return AlertDialog(
+                                    content: Container(
+                                      height: 150,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text('この画像をを削除しますか？',style: TextStyle(fontSize: 14),),
+                                        ],
+                                      ),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () => Navigator.pop(context),
+                                          child: Text(
+                                            'キャンセル',
+                                            style: TextStyle(color: color3),
+                                          )),
+                                      ElevatedButton(
+                                          onPressed: () async {
+                                            await deleteImage(photoList[index]['id']);
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => PhotoList(id: id,folderName: folderName,)),
+                                            );
+                                          },
+                                          child: Text('削除'),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: color2,
+                                          )),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
                           ),
                         );
-                      })
-              )
-          )
+                      })))
         ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.image),
         backgroundColor: color2,
-        onPressed:(){
+        onPressed: () {
           showDialog(
             context: context,
             builder: (_) {
               return AlertDialog(
-                title: Text('写真の選択',textAlign: TextAlign.center,),
+                title: Text(
+                  '写真の選択',
+                  textAlign: TextAlign.center,
+                ),
                 content: Container(
                   height: 200,
                   child: Column(
@@ -109,26 +155,28 @@ class _PhotoListState extends State<PhotoList> {
                         width: 180,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: (){
+                          onPressed: () {
                             Navigator.pop(context);
                             camera();
                           },
                           child: Text('写真を撮る'),
                           style: ElevatedButton.styleFrom(
-                            primary: color3,),
+                            primary: color3,
+                          ),
                         ),
                       ),
                       SizedBox(
                         width: 180,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: (){
+                          onPressed: () {
                             Navigator.pop(context);
                             gallery();
                           },
                           child: Text('ギャラリーから選ぶ'),
                           style: ElevatedButton.styleFrom(
-                            primary: color3,),
+                            primary: color3,
+                          ),
                         ),
                       ),
                     ],
@@ -138,10 +186,15 @@ class _PhotoListState extends State<PhotoList> {
                   SizedBox(
                     width: 270,
                     child: TextButton(
-                      child: Text('キャンセル',textAlign: TextAlign.center,),
-                    onPressed: (){
-                      Navigator.pop(context);
-                    },),
+                      child: Text(
+                        'キャンセル',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: color3),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
                   )
                 ],
               );
@@ -152,8 +205,6 @@ class _PhotoListState extends State<PhotoList> {
       bottomNavigationBar: BottomNavBar(),
     );
   }
-
-
 
   void camera() async {
     final picker = ImagePicker();
@@ -166,7 +217,10 @@ class _PhotoListState extends State<PhotoList> {
     await uploadFile(image, widget.id);
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => PhotoList(id: folderId,)),
+      MaterialPageRoute(
+          builder: (context) => PhotoList(
+                id: folderId,
+              )),
     );
   }
 
@@ -181,7 +235,10 @@ class _PhotoListState extends State<PhotoList> {
     await uploadFile(image, widget.id);
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => PhotoList(id: folderId,)),
+      MaterialPageRoute(
+          builder: (context) => PhotoList(
+                id: folderId,
+              )),
     );
   }
 }

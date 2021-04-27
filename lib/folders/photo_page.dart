@@ -48,6 +48,7 @@ class _PhotoPageState extends State<PhotoPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: color1,
       appBar: AppBar(
         title: title,
         centerTitle: true,
@@ -68,13 +69,18 @@ class _PhotoPageState extends State<PhotoPage> {
                     style: GoogleFonts.getFont('Concert One', fontSize: 40),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 20, right: 20),
+                    padding: EdgeInsets.only(
+                        left: 30, right: 30, top: 20, bottom: 10),
                     height: 300,
                     child: Center(
                       child: ListView.builder(
                         itemCount: memo == null ? 0 : memo.length,
                         itemBuilder: (context, index) {
-                          return Container(child: Text(memo[index]['posts']));
+                          return Container(
+                              child: Text(
+                            memo[index]['posts'],
+                            style: TextStyle(fontSize: 20),
+                          ));
                         },
                       ),
                     ),

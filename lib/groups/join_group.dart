@@ -27,30 +27,32 @@ class _JoinGroupState extends State<JoinGroup> {
             color: color2
         ),
       ),
-      body: Container(
-        padding: EdgeInsets.only(left: 50,right: 50),
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(height: 80,),
-              Text('加入するグループのIDを入力してください'),
-              TextField(
-                controller: idController,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(left: 50,right: 50),
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(height: 80,),
+                Text('加入するグループのIDを入力してください'),
+                TextField(
+                  controller: idController,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20
+                  ),
                 ),
-              ),
-              SizedBox(height: 30,),
-              ElevatedButton(
-                  onPressed: search,
-                  child: Text(btn),
-                style: ElevatedButton.styleFrom(
-                  primary: color3,),
-              ),
-          SizedBox(height: 20,),
-              join
-            ],
+                SizedBox(height: 30,),
+                ElevatedButton(
+                    onPressed: search,
+                    child: Text(btn),
+                  style: ElevatedButton.styleFrom(
+                    primary: color3,),
+                ),
+            SizedBox(height: 20,),
+                join
+              ],
+            ),
           ),
         ),
       ),

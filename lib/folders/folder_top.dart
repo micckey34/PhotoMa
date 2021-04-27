@@ -1,3 +1,4 @@
+import 'package:app_photoma/folders/delete_folder.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -52,12 +53,53 @@ class _FolderTopState extends State<FolderTop> {
                   return Center(
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.push(context,
+                        Navigator.push(
+                          context,
                           MaterialPageRoute(
                               builder: (context) => PhotoList(
                                     id: folders[index]['id'],
                                     folderName: folders[index]['folder_name'],
                                   )),
+                        );
+                      },
+                      onLongPress: () {
+                        showDialog(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+                              content: Container(
+                                height: 150,
+                                child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text("「${folders[index]['folder_name']}」",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                                    Text('このフォルダをを削除しますか？',style: TextStyle(fontSize: 14),),
+                                    Text('中の画像も削除されます。',style: TextStyle(fontSize: 14),)
+                                  ],
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: Text(
+                                      'キャンセル',
+                                      style: TextStyle(color: color3),
+                                    )),
+                                ElevatedButton(
+                                    onPressed: () async {
+                                      await deleteFolder(folders[index]['id']);
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => FolderTop()),
+                                      );
+                                    },
+                                    child: Text('削除'),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: color2,
+                                    )),
+                              ],
+                            );
+                          },
                         );
                       },
                       child: Container(
