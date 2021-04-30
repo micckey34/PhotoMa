@@ -23,7 +23,6 @@ class _PhotoPageState extends State<PhotoPage> {
   Future getData() async {
     var url = baseUrl + 'photoPage/' + imageId.toString();
     var response = await http.get(Uri.parse(url));
-    // print(response.body);
     setState(() {
       image = json.decode(response.body);
     });
@@ -47,6 +46,7 @@ class _PhotoPageState extends State<PhotoPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: color1,
       appBar: AppBar(
         title: title,
         centerTitle: true,
@@ -64,7 +64,7 @@ class _PhotoPageState extends State<PhotoPage> {
                       : Container(),
                   Text(
                     'MEMO',
-                    style: GoogleFonts.getFont('Concert One', fontSize: 40),
+                    style: GoogleFonts.getFont('Concert One', fontSize: 30),
                   ),
                   Container(
                     padding: EdgeInsets.only(

@@ -1,6 +1,6 @@
 import 'local_db.dart';
 
-// 接続先のURL
+// 接続先URL
 //ローカル
 // String baseUrl = 'http://10.0.2.2:8000/api/';
 //サーバー

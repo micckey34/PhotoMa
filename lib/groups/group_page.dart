@@ -205,7 +205,6 @@ class _GroupPageState extends State<GroupPage> {
                 ],
               )),
           actions: [
-            // ボタン領域
             TextButton(
               child: Text(
                 "キャンセル",

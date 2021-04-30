@@ -102,7 +102,7 @@ class _SearchTopState extends State<SearchTop> {
                                       SizedBox(height: 1),
                                       Text(
                                         users[index]['name'],
-                                        style: GoogleFonts.getFont('Kosugi Maru',fontSize: 28),
+                                        style: GoogleFonts.getFont('Kosugi Maru',fontSize: 24),
                                       ),
                                       Text(
                                         users[index]['salon'],
@@ -167,7 +167,8 @@ class _SearchTopState extends State<SearchTop> {
           color:color1,
         ),
         child: Center(
-          child: Text(name,style: TextStyle(fontSize: 12),),
+          child: Text(name,
+            style: GoogleFonts.getFont('Kosugi Maru',fontSize: 9),textAlign: TextAlign.center,),
         ),
       );
   }

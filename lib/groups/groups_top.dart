@@ -45,14 +45,15 @@ class _GroupsTopState extends State<GroupsTop> {
         ),
         body: (groups != null && groups.length == 0)
             ? Container(
-          padding: EdgeInsets.all(30),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('右上のアイコンからグループを作ってみましょう。'),
-                    Text('また、右下のアイコンから'),
-                    Text('グループに参加することもできます。')
-                  ],
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('右上のアイコンからグループを作ってみましょう。'),
+                      Text('また、右下のアイコンから'),
+                      Text('グループに参加することもできます。')
+                    ],
+                  ),
                 ),
               )
             : Center(

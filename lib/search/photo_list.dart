@@ -24,8 +24,6 @@ class _PhotoListState extends State<PhotoList> {
     setState(() {
       photoList = json.decode(response.body);
     });
-    // print(folderId);
-    // print(photoList);
   }
   @override
   void initState() {
@@ -35,6 +33,7 @@ class _PhotoListState extends State<PhotoList> {
   }
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: color1,
       appBar: AppBar(
         title: title,
         centerTitle: true,
@@ -57,7 +56,6 @@ class _PhotoListState extends State<PhotoList> {
                                   context,
                                   MaterialPageRoute(builder: (context) => PhotoPage(id: photoList[index]['id'],)),
                                 );
-
                               },
                               child: Container(
                                 // width: 150,

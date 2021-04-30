@@ -1,10 +1,11 @@
-import 'package:app_photoma/search/photo_list.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../parts/nav_bar.dart';
 import '../parts/color.dart';
 import '../dataBase/base_url.dart';
+import '../search/photo_list.dart';
 
 class UsersPage extends StatefulWidget {
   final int userId;
@@ -87,15 +88,15 @@ class _UsersPageState extends State<UsersPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          data == null ? 'name' : data['name'],
+                          data == null ? '' : data['name'],
                           style: TextStyle(fontSize: 25),
                         ),
                         Divider(
-                          color: Colors.deepPurpleAccent,
+                          color: color2,
                           thickness: 2,
                         ),
-                        Text(data == null ? 'name' : data['salon'],
-                            style: TextStyle(fontSize: 25))
+                        Text(data == null ? '' : data['salon'],
+                            style: TextStyle(fontSize: 23))
                       ],
                     ),
                   ),
@@ -138,7 +139,9 @@ class _UsersPageState extends State<UsersPage> {
                               )]
                             ),
                             child: Center(
-                              child: Text(folderData[index]['folder_name']),
+                              child: Text(folderData[index]['folder_name'],
+                                style: GoogleFonts.getFont('Kosugi Maru',fontSize: 10),textAlign: TextAlign.center,
+                              ),
                             ),
                           ),
                         ),

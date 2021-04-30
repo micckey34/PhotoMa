@@ -27,7 +27,6 @@ class _SignInState extends State<SignIn> {
           children: [
             Container(
               height: 250,
-              // color: Colors.blue,
               child: Column(children: [
                 SizedBox(
                   height: 150,
@@ -95,7 +94,10 @@ class _SignInState extends State<SignIn> {
                     ),
                     TextButton(
                       onPressed: signUp,
-                      child: Text('新規登録はこちら',style: TextStyle(color: color2),),
+                      child: Text(
+                        '新規登録はこちら',
+                        style: TextStyle(color: color2),
+                      ),
                       style: TextButton.styleFrom(
                           textStyle: TextStyle(fontSize: 18)),
                     )

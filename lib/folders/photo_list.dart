@@ -220,7 +220,8 @@ class _PhotoListState extends State<PhotoList> {
       MaterialPageRoute(
           builder: (context) => PhotoList(
                 id: folderId,
-              )),
+              )
+      ),
     );
   }
 
@@ -238,7 +239,8 @@ class _PhotoListState extends State<PhotoList> {
       MaterialPageRoute(
           builder: (context) => PhotoList(
                 id: folderId,
-              )),
+              )
+      ),
     );
   }
 }

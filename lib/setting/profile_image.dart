@@ -20,7 +20,6 @@ Future uploadFile(File _image ) async {
       .ref('profile/$fileName')
       .getDownloadURL();
   print(imageUrl);
-
   int myId = await user();
 
   String url = baseUrl + 'profileImg';

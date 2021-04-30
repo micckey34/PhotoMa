@@ -14,11 +14,7 @@ Future<void> changeData(type, value) async {
   http.Response resp =
   await http.post(Uri.parse(url), headers: headers, body: body);
   print(body);
-  if (resp.statusCode <= 201) {
-    print(resp.statusCode);
-  } else if (resp.statusCode > 201) {
-    print(resp.statusCode);
-  }
+  print(resp.statusCode);
 }
 
 class ChangeDone extends StatelessWidget {

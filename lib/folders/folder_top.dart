@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../dataBase/base_url.dart';
@@ -141,7 +142,7 @@ class _FolderTopState extends State<FolderTop> {
                               child: Center(
                                 child: Text(
                                   folders[index]['folder_name'],
-                                  style: TextStyle(fontSize: 20, color: color2),
+                                  style: GoogleFonts.getFont('Kosugi Maru',fontSize: 18,color: color2),
                                 ),
                               ),
                             ),

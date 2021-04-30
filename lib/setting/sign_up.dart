@@ -23,13 +23,11 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
               height: 250,
-              // color: Colors.blue,
               child: Column(children: [
                 SizedBox(
                   height: 150,
@@ -44,22 +42,20 @@ class _SignUpState extends State<SignUp> {
               ]),
             ),
             Container(
-              // color: Colors.red,
-              height: 600,
+              // height: 600,
               padding: EdgeInsets.only(left: 30, right: 30),
               child: Form(
                 key: _formKey,
                 child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
                       errorMessage,
                       style: TextStyle(color: Colors.red),
                     ),
-                    inputField(false,nameController, '名前', 'Name'),
-                    inputField(false,salonController, 'サロン名', 'Salon'),
-                    inputField(false,emailController, 'メールアドレス', 'E-mail'),
-                    inputField(true,passwordController, 'パスワード', 'Password'),
+                    inputField(false, nameController, '名前', 'Name'),
+                    inputField(false, salonController, 'サロン名', 'Salon'),
+                    inputField(false, emailController, 'メールアドレス', 'E-mail'),
+                    inputField(true, passwordController, 'パスワード', 'Password'),
                     SizedBox(
                       height: 50,
                     ),
@@ -74,13 +70,15 @@ class _SignUpState extends State<SignUp> {
                                     fontSize: 20, fontWeight: FontWeight.bold)),
                             onPressed: _request,
                             child: Text('新規登録')),
-
                         TextButton(
                           onPressed: signIn,
-                          child: Text('ログインはこちら',style: TextStyle(color: color2),),
+                          child: Text(
+                            'ログインはこちら',
+                            style: TextStyle(color: color2),
+                          ),
                           style: TextButton.styleFrom(
                               textStyle: TextStyle(fontSize: 18)),
-                        )
+                        ),
                       ]),
                     ),
                   ],
@@ -93,20 +91,19 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget inputField(bool,controller,type,label){
-    return
-      TextFormField(
-        obscureText: bool,
-        controller: controller,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return type+'を入力してください';
-          }
-          return null;
-        },
-        decoration: InputDecoration(labelText:  label),
-        style: TextStyle(fontSize: 20),
-      );
+  Widget inputField(bool, controller, type, label) {
+    return TextFormField(
+      obscureText: bool,
+      controller: controller,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return type + 'を入力してください';
+        }
+        return null;
+      },
+      decoration: InputDecoration(labelText: label),
+      style: TextStyle(fontSize: 20),
+    );
   }
 
   Future _request() async {

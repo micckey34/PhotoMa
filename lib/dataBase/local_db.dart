@@ -41,17 +41,17 @@ class LocalDatabase {
   }
 
   Future<int> insert(Map<String, dynamic> row) async {
-    Database db = await instance.database; //DBにアクセスする
-    return await db.insert(table, row); //テーブルにマップ型のものを挿入。追加時のrowIDを返り値にする
+    Database db = await instance.database;
+    return await db.insert(table, row);
   }
 
   Future<List<Map<String, dynamic>>> queryAllRows() async {
-    Database db = await instance.database; //DBにアクセスする
-    return await db.query(table); //全件取得
+    Database db = await instance.database;
+    return await db.query(table);
   }
 
   Future<int> queryRowCount() async {
-    Database db = await instance.database; //DBにアクセスする
+    Database db = await instance.database;
     return Sqflite.firstIntValue(
         await db.rawQuery('SELECT COUNT(*) FROM $table'));
   }

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dataBase/local_db.dart';
 import 'setting/sign_in.dart';
@@ -50,6 +51,7 @@ class _StartPageState extends State<StartPage> {
   @override
   void initState() {
     super.initState();
+    Firebase.initializeApp();
     check();
   }
   Widget build(BuildContext context) {

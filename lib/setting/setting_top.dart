@@ -77,8 +77,8 @@ class _SettingTopState extends State<SettingTop> {
                       TextButton(
                           child:Text('プロフィール写真の変更' ,style: TextStyle(color: color2),),
                           onPressed: ()async{
-                            gallery();
-                            await Navigator.pushReplacement(
+                            await gallery();
+                            Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(builder: (context) => SettingTop()),
                             );

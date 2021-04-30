@@ -7,6 +7,7 @@ import '../parts/color.dart';
 
 class MemoCreate extends StatefulWidget {
   final int imageId;
+
   const MemoCreate({Key key, this.imageId}) : super(key: key);
 
   @override
@@ -21,22 +22,26 @@ class _MemoCreateState extends State<MemoCreate> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        IntrinsicWidth(
-          stepWidth: 340,
-          stepHeight: 50,
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: 50.0,
+            maxWidth:   340,
+          ),
           child: TextField(
             controller: memoController,
             keyboardType: TextInputType.multiline,
             maxLines: null,
             decoration: InputDecoration(
+              contentPadding:
+              const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(10),
                 borderSide: const BorderSide(
                   color: Colors.black38,
                 ),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(10),
                 borderSide: const BorderSide(
                   color: Colors.black38,
                 ),
@@ -51,9 +56,12 @@ class _MemoCreateState extends State<MemoCreate> {
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(color2)),
                 onPressed: postBtn,
-                child: Text('メモ',
+                child: Text(
+                  'メモ',
                   style: TextStyle(fontSize: 13),
-                )))
+                )
+            )
+        )
       ],
     );
   }
@@ -72,7 +80,9 @@ class _MemoCreateState extends State<MemoCreate> {
           MaterialPageRoute(
               builder: (context) => PhotoPage(
                     id: widget.imageId,
-                  )));
+                  )
+          )
+      );
     }
   }
 }

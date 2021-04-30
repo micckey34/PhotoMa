@@ -24,8 +24,6 @@ class _FolderPageState extends State<FolderPage> {
       setState(() {
         photoList = json.decode(response.body);
       });
-      // print(folderId);
-      // print(photoList);
     }
     @override
     void initState() {

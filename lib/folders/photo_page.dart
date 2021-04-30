@@ -48,7 +48,6 @@ class _PhotoPageState extends State<PhotoPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: color1,
       appBar: AppBar(
         title: title,
         centerTitle: true,
@@ -66,7 +65,7 @@ class _PhotoPageState extends State<PhotoPage> {
                       : Container(),
                   Text(
                     'MEMO',
-                    style: GoogleFonts.getFont('Concert One', fontSize: 40),
+                    style: GoogleFonts.getFont('Concert One', fontSize: 30),
                   ),
                   Container(
                     padding: EdgeInsets.only(
@@ -95,7 +94,9 @@ class _PhotoPageState extends State<PhotoPage> {
                   // color: color1,
                   child: MemoCreate(
                     imageId: imageId,
-                  )))
+                  )
+              )
+          )
         ],
       ),
       bottomNavigationBar: BottomNavBar(),
