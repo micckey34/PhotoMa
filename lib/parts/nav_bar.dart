@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'color.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../folders/folder_top.dart';
-import '../groups/groups_top.dart';
-import '../search/search_top.dart';
-import '../setting/setting_top.dart';
+import '../view/folder/folder_top.dart';
+import '../view/group/groups_top.dart';
+import '../view/search/search_top.dart';
+import '../view/setting/setting_top.dart';
 
 Text title = Text('PhotoMa',
     style:GoogleFonts.getFont(
