@@ -32,6 +32,7 @@ class _MemoCreateState extends State<MemoCreate> {
             keyboardType: TextInputType.multiline,
             maxLines: null,
             decoration: InputDecoration(
+              hintText: 'メモ',
               contentPadding:
               const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
               enabledBorder: OutlineInputBorder(
@@ -56,10 +57,7 @@ class _MemoCreateState extends State<MemoCreate> {
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(color2)),
                 onPressed: postBtn,
-                child: Text(
-                  'メモ',
-                  style: TextStyle(fontSize: 13),
-                )
+                child: Icon(Icons.save_alt)
             )
         )
       ],
